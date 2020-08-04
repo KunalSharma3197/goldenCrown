@@ -27,7 +27,8 @@ public class FileParserTest {
     public void parseInputFileTest() throws IOException {
 
         File file = new File("src/test/resources/FileParserTestInput.txt"); 
-        String contents = FileParser.parseInputFile(file.getAbsolutePath());
+        FileParser fileParser = new FileParser(file.getAbsolutePath());
+        String contents = fileParser.parseInputFile();
         String[] lines = contents.split(System.getProperty("line.separator"));
 
         assertNotNull(contents);
@@ -43,7 +44,8 @@ public class FileParserTest {
     @Test
     public void emptyFileTest() throws IOException {
         File file = new File("src/test/resources/emptyFile.txt");
-        String contents = FileParser.parseInputFile(file.getAbsolutePath());
+        FileParser fileParser = new FileParser(file.getAbsolutePath());
+        String contents = fileParser.parseInputFile();
         String[] lines = contents.split(System.getProperty("line.separator"));
         String[] expected = {""};
 
@@ -62,7 +64,8 @@ public class FileParserTest {
         Exception expected = new FileNotFoundException();
         Exception actual = null;
         try {
-            String contents = FileParser.parseInputFile(file.getAbsolutePath());
+            FileParser fileParser = new FileParser(file.getAbsolutePath());
+            String contents = fileParser.parseInputFile();
         } catch (Exception e) {
             actual = e;
         }

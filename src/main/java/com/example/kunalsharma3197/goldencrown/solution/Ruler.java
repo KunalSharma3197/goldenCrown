@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Solution class performs the task of checking
+ * Ruler class performs the task of checking
  * if it is possible to become a ruler of all kingdoms if yes we return list of ruler
  * and ally kingdoms.
  * If not possible we return list with String none.
@@ -76,7 +76,8 @@ public class Ruler {
              * whether a given kingdom will agree to become an
              * ally of Space kingdom
              */
-            if (isAlliance(encodedMessage, emblem)) {
+            if (isAlliance(encodedMessage, emblem) &&
+                uniqueKindoms.contains(kingdom) == false) {
 
                 uniqueKindoms.add(kingdom);
                 rulerAndAllies.get(king).add(kingdom);

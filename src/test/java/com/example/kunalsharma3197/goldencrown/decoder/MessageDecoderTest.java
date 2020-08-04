@@ -2,6 +2,7 @@ package com.example.kunalsharma3197.goldencrown.decoder;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -16,8 +17,8 @@ public class MessageDecoderTest {
         String encodedMessage = "GOLDEN";
         MessageDecoder decoder = new MessageDecoder();
         List<Character> decodedMessage = decoder.decode(encodedMessage, 5);
-        assertEquals('B', (char) decodedMessage.get(0));
-        assertEquals('I', (char) decodedMessage.get(5));
+        List<Character> expected = Arrays.asList('B', 'J', 'G', 'Y', 'Z', 'I');
+        assertEquals(expected, decodedMessage);
     }
 
     /**
@@ -41,7 +42,7 @@ public class MessageDecoderTest {
     public void encodedMessageHasLowerCaseAlphabetsTest() {
         String encodedMessage = "abcd";
         MessageDecoder decoder = new MessageDecoder();
-        List<Character> decodedMessage = decoder.decode(encodedMessage, 2);
+        List<Character> decodedMessage = decoder.decode(encodedMessage, 6);
         assertEquals(0, decodedMessage.size());
     }
 
@@ -51,11 +52,24 @@ public class MessageDecoderTest {
      */
     @Test
     public void encodedMessageHasAnyPossibleCharacter() {
-        String encodedMessage = "a1@%BC";
+        String encodedMessage = "a1@ % BC";
         MessageDecoder decoder = new MessageDecoder();
         List<Character> decodedMessage = decoder.decode(encodedMessage, 2);
+        List<Character> expected = Arrays.asList('Z', 'A');
         assertEquals(2, decodedMessage.size());
-        assertEquals('Z', (char) decodedMessage.get(0));
+        assertEquals(expected, decodedMessage);
+    }
+
+    /**
+     * this test the functionality of decode method of MessageDecoder when encoded message consists
+     * of all empty characters
+     */
+    @Test
+    public void encodedMessageIsEmpty() {
+        String encodedMessage = "        ";
+        MessageDecoder decoder = new MessageDecoder();
+        List<Character> decodedMessage = decoder.decode(encodedMessage, 10);
+        assertEquals(0, decodedMessage.size());
     }
 
 }

@@ -10,19 +10,12 @@ import java.util.List;
 
 public class MessageDecoder {
 
-    // char array to store english alphabets.
-    private char[] alphabets;
+    static final int numberOfAlphabets = 26; // number of english alphabets.
+
+    static final char firstAlphabetCharacter = 'A'; // first alphabet character considering all capital alphabets
 
     public MessageDecoder() {
 
-        // storing english alphabets in the object. 
-        alphabets = new char[] {'A', 'B', 'C', 'D', 'E',
-            'F', 'G', 'H', 'I', 'J',
-            'K', 'L', 'M', 'N', 'O',
-            'P', 'Q', 'R', 'S', 'T',
-            'U', 'V', 'W', 'X', 'Y',
-            'Z'
-        };
     }
 
     /**
@@ -36,21 +29,25 @@ public class MessageDecoder {
 
         List<Character> decodedMessage = new LinkedList<>();
 
-        for (char ch : encodedMessage.toCharArray()) {    
+        for (char character : encodedMessage.toCharArray()) {    
 
-            // if current character ch is not an alphabet or is lower case we ignore and move to 
-            // next iteration because we are only concerned with decoding uppercase alphabet characters.
-            if (!Character.isLetter(ch) || Character.isLowerCase(ch)){
+            // if  character is not a alphabet or is lower case we move to next iteration
+            if (Character.isLetter(character) == false || Character.isLowerCase(character)) {
                 continue;
             }
 
-            // position determines the index of current char in the alphabets object defined
-            // as class attribute.
-            int position = ch - 'A';
+            // originalCharacterPosition determines the character position in the alphabet.
+            int originaCharacterPosition = character - firstAlphabetCharacter;
 
-            // ch is decoded by determing the character present at index position - secretKey
-            // however position - secretKey can be less than 0 hence we use (26 + position - secretKey) % 26
-            decodedMessage.add(alphabets[(26 + position - secretKey) % 26]);
+            //newAlphabetPosition determines the character's new positon in the alphabet.
+            // using modulo we strictly remain in the alphabet range.
+            int newAlphabetPosition = (
+                numberOfAlphabets + originaCharacterPosition - secretKey) % numberOfAlphabets;
+            
+            //retrieve the new character by adding the new position to the ASCII code of letter A.
+	        char decodedCharacter = (char) (firstAlphabetCharacter + newAlphabetPosition);
+
+            decodedMessage.add(decodedCharacter);//add the decodedCharacter into decodedMessage.
         }
         
         return decodedMessage;

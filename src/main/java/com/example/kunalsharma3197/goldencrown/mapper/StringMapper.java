@@ -24,11 +24,12 @@ import java.util.List;
  */
 public class StringMapper implements ObjectMapper {
     
-    private String data;//class attribute to store data parsed from .txt file 
+    private String[] lines;//class attribute to store data parsed from .txt file as array of String 
     
     public StringMapper(String data) {
 
-        this.data = data;
+        // seperating Strings based on line.seperator property and adding it to class attrubute lines.
+        this.lines =  data.split(System.getProperty("line.separator"));
     }
 
     /**
@@ -39,13 +40,10 @@ public class StringMapper implements ObjectMapper {
         // using LinkedList to achieve O(1) insertion 
         List<Pair<String, String>> kingdomsAndMessages = new LinkedList<>();
 
-        //incase empty string is passed as data return empty list
-        if (data == null || data.length() == 0) {
+        //incase data is empty return empty list
+        if (lines == null || lines.length == 0) {
             return kingdomsAndMessages; 
         }
-       
-        // Storing the data as a String array.
-        String[] lines = data.split(System.getProperty("line.separator"));
 
         for (String line : lines) {
 

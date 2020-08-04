@@ -16,10 +16,12 @@ import java.util.Map;
 public class GoldenCrownMain {
     
     public static void main(String[] args) throws IOException {
+
+        FileParser fileParser = new FileParser(args[0]); // args[0] contains file path
         
-        // Passing the path to file from args[0] to FileParse.parseInputFile
+        // Passing the path to file from args[0] to fileParse.parseInputFile
         // In order to get the data present in .txt file as String.
-        String data = FileParser.parseInputFile(args[0]);
+        String data = fileParser.parseInputFile();
 
         // objectMapper will be used to map the String data determined from the .txt
         // using FileParser to the required data structure

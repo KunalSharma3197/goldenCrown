@@ -22,8 +22,13 @@ public class FileParser {
      * @throws IOException
      * 
      */
-    priva
-    public  String parseInputFile(String pathToFile) throws IOException {
+    private String pathToFile;// variable for storing path of input file
+    
+    public FileParser(String pathToFile) {
+        this.pathToFile = pathToFile; // initialising pathToFile variable
+    }
+
+    public  String parseInputFile() throws IOException {
 
         // Creating BufferedReader using FileReader and pathToFile
         // pathToFile is provided as param.
