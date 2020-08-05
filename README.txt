@@ -7,7 +7,7 @@ Once he wins 3 more kingdoms, he is the ruler! The secret message needs to conta
 For example, secret message to the Land kingdom (emblem: Panda) needs to have the letter 'p','n','d' at-least once and 'a' atleast
 twice. If he sends "ahdvvnxxxautup" to the Land kingdom, he will win them over.
 King Shan wants to make sure his secret message is not found by his enemies easily. So he decides to use the oldest of the
-ciphers 'Seasar cipher’. A cipher is a type of secret code, where you swap the letters around so that no-one can read your
+ciphers 'Seasar cipherï¿½. A cipher is a type of secret code, where you swap the letters around so that no-one can read your
 message.
 
 How to run :
@@ -25,6 +25,8 @@ Name : goldencrown
 1. The input is provided in the command line via path to the input.txt file
 2. GoldenCrownMain.java is the main class for the project.
 3. The input.txt file is parsed using FIleParser.java present in parser folder and returns the data as String.
-4. Pair is  a container to ease passing around a tuple of two objects defined in pair folder.
-5. StringMapper is responsible for mapping the data parsed as String to a Data Structure which inturns allows us to process it.
-6. Solution class contains the necessary logic to process the data and generate the result.
+4. Kingdoms and their emblems are present in KingdomsAndEmblems.txt present in src/main/resources. 
+   It is parsed using file parser.
+5. Pair is  a container to ease passing around a tuple of two objects defined in pair folder.
+6. StringMapper is responsible for mapping the data parsed as String to a Data Structure which inturns allows us to process it.
+7. Solution class contains the necessary logic to process the data and generate the result.

@@ -6,7 +6,6 @@ import java.io.IOException;
 
 /* *
 *   A class to parse the given text file and return it in a string format
-
 * e.g ------ >
 *       input.txt -> AIR ROZO
                      GOLDEN CROWN
@@ -15,6 +14,10 @@ import java.io.IOException;
 */     
 public class FileParser {
 
+    public FileParser() {
+        // no args constructor for FileParser
+    }
+
     /**
      * 
      * @param pathToFile
@@ -22,16 +25,11 @@ public class FileParser {
      * @throws IOException
      * 
      */
-    private String pathToFile;// variable for storing path of input file
-    
-    public FileParser(String pathToFile) {
-        this.pathToFile = pathToFile; // initialising pathToFile variable
-    }
 
-    public  String parseInputFile() throws IOException {
+    public  String getContentsOfFile(String pathToFile) throws IOException { 
 
         // Creating BufferedReader using FileReader and pathToFile
-        // pathToFile is provided as param.
+        // pathToFile is provided as param. pathToFile store's path of input file
         BufferedReader br = new BufferedReader(new FileReader(pathToFile));
 
         String everything = new String();//this will contain the file contents.

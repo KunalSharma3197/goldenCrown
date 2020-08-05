@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 /* *
 *  This file test the functionality of FileParser by using a sample txt file. 
@@ -21,20 +23,34 @@ public class FileParserTest {
 
     /**
      * 
-     * This test checks the working of FileParser for a file with contents.
+     * These test checks the working of FileParser for a file with contents.
      */
-    @Test
-    public void parseInputFileTest() throws IOException {
+    private FileParser fileParser;
 
+    @BeforeEach 
+    public void init() {
+        fileParser = new FileParser(); // initialising new instance of FileParser before every test.
+    }
+    @Test
+    public void fileForParsingNotEmptyTest() throws IOException {
+
+        // create a new File for the specified path
         File file = new File("src/test/resources/FileParserTestInput.txt"); 
-        FileParser fileParser = new FileParser(file.getAbsolutePath());
-        String contents = fileParser.parseInputFile();
-        String[] lines = contents.split(System.getProperty("line.separator"));
+
+        //parsing and storing contents of the file as string using absolute path for specified file.
+        String contents = fileParser.getContentsOfFile(file.getAbsolutePath());
+
+
+        //expected contains the correct String that will be generated after parsing the given file. 
+        String expected = "AIR ROZO"
+            + System.lineSeparator()
+            + "LAND FAIJWJSOOFAMAU"
+            + System.lineSeparator()
+            + "ICE STHSTSTVSASOS"
+            + System.lineSeparator();
 
         assertNotNull(contents);
-        assertEquals(3, lines.length);
-        assertEquals("AIR ROZO", lines[0]);
-        
+        assertEquals(expected, contents);   
     }
 
     /**
@@ -42,33 +58,37 @@ public class FileParserTest {
      * This test checks that if the parsed data is empty or not in case passed file is empty.
      */
     @Test
-    public void emptyFileTest() throws IOException {
+    public void fileForParsingIsEmptyTest() throws IOException {
+
+        // create a new File for the specified path
         File file = new File("src/test/resources/emptyFile.txt");
-        FileParser fileParser = new FileParser(file.getAbsolutePath());
-        String contents = fileParser.parseInputFile();
-        String[] lines = contents.split(System.getProperty("line.separator"));
-        String[] expected = {""};
 
-        assertEquals(expected.length, lines.length);
+        //parsing and storing contents of the file as string using absolute path for specified file.
+        String contents = fileParser.getContentsOfFile(file.getAbsolutePath());
 
-        assertEquals(expected[0], lines[0]);
+        //expected contains the correct String that will be generated after parsing the given file
+        // which is empty in this case.
+        String expected = "";
+
+        assertEquals(expected.length(), contents.length());
+
+        assertEquals(expected, contents);
     }
 
     /**
      * This function checks how working of FileParser in case passed file doesn't exist. 
      */
     @Test
-    public void noSuchFileTest() {
+    public void fileForParsingDontExistTest() {
 
-        File file = new File("src/test/resources/noFile.txt");
-        Exception expected = new FileNotFoundException();
-        Exception actual = null;
-        try {
-            FileParser fileParser = new FileParser(file.getAbsolutePath());
-            String contents = fileParser.parseInputFile();
-        } catch (Exception e) {
-            actual = e;
-        }
-        assertEquals(expected.getCause(), actual.getCause());
+        Assertions.assertThrows(FileNotFoundException.class, () -> {
+            
+            // create a new File for the specified path
+            File file = new File("src/test/resources/noFile.txt");
+
+            //parsing and storing contents of the file as string using absolute path for specified file.
+            String contents = fileParser.getContentsOfFile(file.getAbsolutePath());
+          });
+        
     }
 }

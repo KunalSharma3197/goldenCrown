@@ -2,9 +2,11 @@ package com.example.kunalsharma3197.goldencrown;
 
 import com.example.kunalsharma3197.goldencrown.mapper.ObjectMapper;
 import com.example.kunalsharma3197.goldencrown.mapper.StringMapper;
+import com.example.kunalsharma3197.goldencrown.pair.Pair;
 import com.example.kunalsharma3197.goldencrown.parser.FileParser;
 import com.example.kunalsharma3197.goldencrown.solution.Ruler;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -15,25 +17,55 @@ import java.util.Map;
  */
 public class GoldenCrownMain {
     
+    // stores path to KingdomsAndEmblem.txt which contains kingdoms and their emblems. 
+    static final String pathToKingdomsAndEmblemsFile = "src/main/resources/KingdomsAndEmblem.txt";
+
+    /**
+     * 
+     * @param path
+     * @return string
+     * @throws IOException
+     * this method takes path to a file as argument and return contents of the file at that path
+     * as string.
+     */
+    static String parseFileAsString(String path) throws IOException {
+
+        File file = new File(path); // create a new File for the specified path
+
+        // Creating new instance of FileParser.
+        FileParser fileParser = new FileParser();
+
+        //parsing and returning contents of the file as string using absolute path for specified file.
+        return fileParser.getContentsOfFile(file.getAbsolutePath());
+    }
+
     public static void main(String[] args) throws IOException {
 
-        FileParser fileParser = new FileParser(args[0]); // args[0] contains file path
-        
-        // Passing the path to file from args[0] to fileParse.parseInputFile
-        // In order to get the data present in .txt file as String.
-        String data = fileParser.parseInputFile();
+        String pathToInputFile = args[0]; // args[0] contains input file path.
+
+        // kingdomsAndMessagesData contains the content of input file as string
+        String kingdomsAndMessagesData = parseFileAsString(pathToInputFile);
+
+        // kingdomsAndEmblemsData contains contents of KingdomsAndEmblems.txt as String
+        String kingdomsAndEmblemsData = parseFileAsString(pathToKingdomsAndEmblemsFile);
 
         // objectMapper will be used to map the String data determined from the .txt
-        // using FileParser to the required data structure
-        ObjectMapper objectMapper = new StringMapper(data);
+        ObjectMapper objectMapper = new StringMapper();
 
-        // Creating new Instance of Ruler 
-        Ruler ruler = new Ruler();
+        //we used objectMapper to map the kingdomsAndEmblemsData to kingdomsAndEmblems. 
+        Map<String, String> kingdomsAndEmblems = objectMapper
+            .getKingdomsAndEmblems(kingdomsAndEmblemsData);
+        
+        // Creating new Instance of Ruler using map of kingdoms and emblems
+        Ruler ruler = new Ruler(kingdomsAndEmblems);
 
+       // kingdomsAndMessages contains the content of kingdomsAndMessagesData mapped using objectMapper
+        List<Pair<String, String>> kingdomsAndMessages = objectMapper
+            .getKingdomsAndMessages(kingdomsAndMessagesData);
+        
         // Determining the required ruler and list of allies using ruler.getRulerAndAllies()
         // List<Pair<String, String>> mapped using objectMapper is passed as argument
-        Map<String,List<String>> rulerAndAllies = ruler.getRulerAndAllies(objectMapper
-            .getKingdomsAndMessages());
+        Map<String,List<String>> rulerAndAllies = ruler.getRulerAndAllies(kingdomsAndMessages);
 
         for (String king : rulerAndAllies.keySet()) {
 

@@ -9,30 +9,24 @@ import org.junit.Test;
 
 public class MessageDecoderTest {
     /**
-     * this test is used for testing the functionality of decode method of MessageDecoder
+     * these test are used for testing the functionality of decode method of MessageDecoder
      */
+  
     @Test
     public void decodeMessageTest() {
 
-        String encodedMessage = "GOLDEN";
-        MessageDecoder decoder = new MessageDecoder();
+        String encodedMessage = "GOLDEN"; //encoded message 
+
+        MessageDecoder decoder = new MessageDecoder();// initialising new instance of MessageDecode before each test.
+
+        //decodedMessage contains each character from encodedMessage after decoding.
         List<Character> decodedMessage = decoder.decode(encodedMessage, 5);
+
+        //expected contains the correct decoding of each character present in encodedMessage.
         List<Character> expected = Arrays.asList('B', 'J', 'G', 'Y', 'Z', 'I');
         assertEquals(expected, decodedMessage);
     }
 
-    /**
-     * this test is used for testing the functionality of decode method of MessageDecoder
-     * when encoded message consist of numbers.
-     */
-
-    @Test
-    public void encodedMessageHasNumbersTest() {
-        String encodedMessage = "1234";
-        MessageDecoder decoder = new MessageDecoder();
-        List<Character> decodedMessage = decoder.decode(encodedMessage, 2);
-        assertEquals(0, decodedMessage.size());
-    }
 
     /**
      * this test is used for testing the functionality of decode method of MessageDecoder
@@ -41,22 +35,33 @@ public class MessageDecoderTest {
     @Test
     public void encodedMessageHasLowerCaseAlphabetsTest() {
         String encodedMessage = "abcd";
-        MessageDecoder decoder = new MessageDecoder();
-        List<Character> decodedMessage = decoder.decode(encodedMessage, 6);
-        assertEquals(0, decodedMessage.size());
+
+        MessageDecoder decoder = new MessageDecoder();// initialising new instance of MessageDecode before each test.
+
+        //decodedMessage contains each character from encodedMessage after decoding.
+        List<Character> decodedMessage = decoder.decode(encodedMessage, 4);
+        assertEquals(4, decodedMessage.size());
+        List<Character> expected = Arrays.asList('w', 'x', 'y', 'z');
+        assertEquals(expected, decodedMessage);
     }
 
     /**
      * this test is used for testing the functionality of decode method of MessageDecoder
      * when encoded message consist of any possible character. 
+     * As per our decoder definition it is designed to work for only alphabetical character.
+     * So any number or special characters wont be included in the decoded message.
      */
     @Test
     public void encodedMessageHasAnyPossibleCharacter() {
-        String encodedMessage = "a1@ % BC";
-        MessageDecoder decoder = new MessageDecoder();
+        String encodedMessage = "a1@ % BC";//encoded message
+
+        MessageDecoder decoder = new MessageDecoder();// initialising new instance of MessageDecode before each test.
+
         List<Character> decodedMessage = decoder.decode(encodedMessage, 2);
-        List<Character> expected = Arrays.asList('Z', 'A');
-        assertEquals(2, decodedMessage.size());
+        //expected message contains these characters after decoding.
+        // Numbers and special characters are not decoded hence are not included in decoded message.
+        List<Character> expected = Arrays.asList('y', 'Z', 'A'); 
+        assertEquals(3, decodedMessage.size());
         assertEquals(expected, decodedMessage);
     }
 
@@ -66,8 +71,11 @@ public class MessageDecoderTest {
      */
     @Test
     public void encodedMessageIsEmpty() {
-        String encodedMessage = "        ";
-        MessageDecoder decoder = new MessageDecoder();
+        String encodedMessage = "        "; //empty message
+
+        MessageDecoder decoder = new MessageDecoder();// initialising new instance of MessageDecode before each test.
+
+        //decodedMessage contains each character from encodedMessage after decoding.
         List<Character> decodedMessage = decoder.decode(encodedMessage, 10);
         assertEquals(0, decodedMessage.size());
     }
