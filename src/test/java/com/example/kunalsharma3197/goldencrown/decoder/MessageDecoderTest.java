@@ -28,31 +28,16 @@ public class MessageDecoderTest {
     }
 
 
-    /**
-     * this test is used for testing the functionality of decode method of MessageDecoder
-     * when encoded message consist of lowercase alphabets. 
-     */
-    @Test
-    public void encodedMessageHasLowerCaseAlphabetsTest() {
-        String encodedMessage = "abcd";
-
-        MessageDecoder decoder = new MessageDecoder();// initialising new instance of MessageDecode before each test.
-
-        //decodedMessage contains each character from encodedMessage after decoding.
-        List<Character> decodedMessage = decoder.decode(encodedMessage, 4);
-        assertEquals(4, decodedMessage.size());
-        List<Character> expected = Arrays.asList('w', 'x', 'y', 'z');
-        assertEquals(expected, decodedMessage);
-    }
+ 
 
     /**
      * this test is used for testing the functionality of decode method of MessageDecoder
      * when encoded message consist of any possible character. 
-     * As per our decoder definition it is designed to work for only alphabetical character.
+     * As per our decoder definition it is designed to work for only uppercase alphabetical character.
      * So any number or special characters wont be included in the decoded message.
      */
     @Test
-    public void encodedMessageHasAnyPossibleCharacter() {
+    public void testEncodedMessageWithAnyPossibleCharacter() {
         String encodedMessage = "a1@ % BC";//encoded message
 
         MessageDecoder decoder = new MessageDecoder();// initialising new instance of MessageDecode before each test.
@@ -60,8 +45,7 @@ public class MessageDecoderTest {
         List<Character> decodedMessage = decoder.decode(encodedMessage, 2);
         //expected message contains these characters after decoding.
         // Numbers and special characters are not decoded hence are not included in decoded message.
-        List<Character> expected = Arrays.asList('y', 'Z', 'A'); 
-        assertEquals(3, decodedMessage.size());
+        List<Character> expected = Arrays.asList('Z', 'A'); 
         assertEquals(expected, decodedMessage);
     }
 

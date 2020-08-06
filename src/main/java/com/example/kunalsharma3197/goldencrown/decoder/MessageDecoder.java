@@ -6,8 +6,9 @@ import java.util.List;
 /**
  * MessageDecoder is a class whose object will be used to perform decoding of an encoded message.
  * decode method of the class contains the logic for decoding. The logic is based on caeser cipher.
- * MessageDecoder is capable of decoding both uppercase and lowercase alphabets.
- * Numbers and special characters wont be included in decoded message.
+ * MessageDecoder is designed for decoding of uppercase alphabets.
+ * Numbers, lowercase alphabets and special characters wont be included in decoded message.
+ * MessageDecoder can be extended for decoding of characters which are not included as of now.
  */
 
 public class MessageDecoder {
@@ -15,8 +16,6 @@ public class MessageDecoder {
     static final int numberOfAlphabets = 26; // number of english alphabets.
 
     static final char firstUpperCaseAlphabetCharacter = 'A'; // first alphabet character among all capital alphabets.
-
-    static final char firstLowerCaseAlphabetCharacter = 'a'; // first alphabet character among all lower case alphabets.
 
     public MessageDecoder() {
 
@@ -27,105 +26,48 @@ public class MessageDecoder {
      * @param encodedMessage
      * @param secretKey
      * @return decodeMessage
-     * 
+     * For a given encodedMessage and secretKey the decode method determines the decoded message
+     * and return it as a List<Character>
      */
     public List<Character> decode(String encodedMessage, int secretKey) {
 
-        List<Character> decodedMessage = new LinkedList<>();
+        List<Character> decodedMessage = new LinkedList<>();// list to store characters of decodedMessage.
 
         for (char character : encodedMessage.toCharArray()) {    
-
-            // decodedChar contains the character after decoding. Intialised to an empty character.
-            char decodedChar = ' ';
-
-            // if  character is a UpperCase alphabet
-            if (Character.isUpperCase(character)) {
-   
-                //decoding character using decodeUpperCaseAlphabet method.
-                decodedChar = decodeUpperCaseAlphabet(character, secretKey);
-            }
-            //if character is a lowerCase alphabet
-            else if (Character.isLowerCase(character)) {
-
-                //decoding character using decodeLowerrCaseAlphabet method.
-                decodedChar = decodeLowerCaseAlphabet(character, secretKey);
-            }
-            // if none of the above case satisfies move to next iteration
-            else {
+            
+            // decodedCharacter will hold the decoded character. It is initialised to an empty character.
+            char decodedCharacter = ' '; 
+            
+            // if character is not a letter or lowercase move to next iteration.
+            if (!Character.isLetter(character) || Character.isLowerCase(character)) {
                 continue;
             }
 
-            decodedMessage.add(decodedChar);//adding the decoded character to the decodedMessage.
+            // decodedCharacterPosition contains the position of character after decoding in alphabets.
+            int decodedCharacterPosition = getDecodedCharacterPosition(character, secretKey);
+
+            // determining the decoded character using decodedCharacterPosition and ASCII code of 'A'
+            decodedCharacter = (char) (firstUpperCaseAlphabetCharacter + decodedCharacterPosition);
+            decodedMessage.add(decodedCharacter);//adding the decoded character to the decodedMessage.
         }
         
-        return decodedMessage;
+        return decodedMessage; // return the decodedMessage
     }
 
+
     /**
-     * 
-     * @param upperCaseCharacter
+     * @param character 
      * @param secretKey
-     * @return decodedCharacter
-     * decodeUpperrCaseAlphabet decodes the upper case character passed as argument using caeser cipher
-     * The value by which the character will be shifter is determined by secret key.
-     * e.g -->
-     *     char K, secretKey = 2
-     *     decodedChar = I 
-     *  
-     */
-
-    private char decodeUpperCaseAlphabet(char upperCaseCharacter, int secretKey) {
-
-        boolean isUpperCase = true; //flag to store case of character
-        //using getNewPosition to get new alphabet position after shifting by value = secretKey
-        int newAlphabetPosition = getNewPositon(upperCaseCharacter, secretKey, isUpperCase);
-
-        //retrieve the new character by adding the new position to the ASCII code of letter A.
-        char decodedCharacter = (char) (firstUpperCaseAlphabetCharacter + newAlphabetPosition);
-
-        return decodedCharacter;//return the decoded character.
-    }
-
-    /**
-     * 
-     * @param lowerCaseCharacter
-     * @param secretKey
-     * @return decodedCharacter
-     * decodeLowerCaseAlphabet decodes the lower case character passed as argument using caeser cipher
-     * The value by which the character will be shifter is determined by secret key.
-     * e.g -->
-     *     char a, secretKey = 2
-     *     decodedChar = y 
-     *  
-     */
-    private char decodeLowerCaseAlphabet(char lowerCaseCharacter, int secretKey) {
-
-        boolean isUpperCase = false; // flag to check case of character.
-        //using getNewPosition to get new alphabet position after shifting by value = secretKey
-        int newAlphabetPosition = getNewPositon(lowerCaseCharacter, secretKey, isUpperCase);
-        
-        //retrieve the new character by adding the new position to the ASCII code of letter A.
-        char decodedCharacter = (char) (firstLowerCaseAlphabetCharacter + newAlphabetPosition);
-
-        return decodedCharacter;//return the decoded character.
-    }
-
-    /**
-     * getNewPosition gives us the new position of a character in the alphabets after it
+     * @return position of character after shifting it by a value equal to secret key.
+     *  getNewPosition gives us the new position of a character in the alphabets after it
      *  is being shifted by a value equal to secretKey.
      */
-    private int getNewPositon(char character, int secretKey, boolean isUpperCase) {
+    public int getDecodedCharacterPosition(char character, int secretKey) {
 
-         // originalCharacterPosition determines the character position in the alphabet.
-        int originaCharacterPosition = 0;
-        // if an uppercase charcter determine originalCharacterPosition using firstUpperCaseAlphabetCharacter.
-        if (isUpperCase) {
-            originaCharacterPosition = character - firstUpperCaseAlphabetCharacter;
-        } else {
-            // if a lowercase charcter determine originalCharacterPosition 
-            // using firstLowererCaseAlphabetCharacter.
-            originaCharacterPosition = character - firstLowerCaseAlphabetCharacter;
-        }        
+        // originalCharacterPosition determines the character position in the alphabet.
+        // for an uppercase charcter determine originalCharacterPosition using firstUpperCaseAlphabetCharacter.
+        int originaCharacterPosition = character - firstUpperCaseAlphabetCharacter;   
+
         //newAlphabetPosition determines the character's new positon in the alphabet.
         // using modulo we strictly remain in the alphabet range.
         int newAlphabetPosition = (

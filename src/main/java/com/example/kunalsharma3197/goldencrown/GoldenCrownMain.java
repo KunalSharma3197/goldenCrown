@@ -18,12 +18,12 @@ import java.util.Map;
 public class GoldenCrownMain {
     
     // stores path to KingdomsAndEmblem.txt which contains kingdoms and their emblems. 
-    static final String pathToKingdomsAndEmblemsFile = "src/main/resources/KingdomsAndEmblem.txt";
+    static final String pathToKingdomsAndEmblemsFile = "build/resources/main/KingdomsAndEmblems.txt";
 
     /**
      * 
-     * @param path
-     * @return string
+     * @param path to file
+     * @return contents of file as string
      * @throws IOException
      * this method takes path to a file as argument and return contents of the file at that path
      * as string.
