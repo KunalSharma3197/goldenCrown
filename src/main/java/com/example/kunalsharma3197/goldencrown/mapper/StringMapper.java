@@ -74,6 +74,7 @@ public class StringMapper implements ObjectMapper {
     /**
      * Method to perform mapping of data to List<Pair<String,String>>
      */
+    @Override
     public List<Pair<String, String>> getKingdomsAndMessages(String data) {
 
         // using LinkedList to achieve O(1) insertion 
@@ -103,6 +104,7 @@ public class StringMapper implements ObjectMapper {
      * Method to perform mapping of data to Map<String, String> kingdomAndEmblem which contains
      * name and emblem of each kingdom
      */
+    @Override
     public Map<String, String> getKingdomsAndEmblems(String data) {
 
         Map<String, String> kingdomsAndEmblems = new HashMap<>();// map to store kingdoms and their emblems.

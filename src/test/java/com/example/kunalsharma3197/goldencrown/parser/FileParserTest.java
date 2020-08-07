@@ -70,7 +70,7 @@ public class FileParserTest {
         // which is empty in this case.
         String expected = "";
 
-        assertEquals(expected.length(), contents.length());
+        assertEquals(0, contents.length());
 
         assertEquals(expected, contents);
     }

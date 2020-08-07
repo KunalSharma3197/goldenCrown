@@ -1,15 +1,17 @@
 package com.example.kunalsharma3197.goldencrown.solution;
 
 import com.example.kunalsharma3197.goldencrown.decoder.MessageDecoder;
+import com.example.kunalsharma3197.goldencrown.decoder.MessageDecoderImpl;
 import com.example.kunalsharma3197.goldencrown.pair.Pair;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 
 /**
  * Ruler class performs the task of checking
@@ -26,14 +28,14 @@ import java.util.Set;
                 "Space" : {"AIR", "LAND", "ICE"}
             }
  */
-
 public class Ruler {
 
     private Map<String, String> kingdomsAndEmblems;// Map to store Kingdoms and their emblem.
-    static final int mininmuAlliesNeeded = 3; // minimum number of allies required to become the ruler.
-    static final String king = "Space";// ruler kingdom
+    final int mininmumAlliesNeeded = 3; // minimum number of allies required to become the ruler.
+    final String king = "SPACE";// ruler kingdom
+    final String noAllies = "None"; // represents that ruler kingdom has no allies.
 
-    // Constructor of Ruler class to intialise 
+    // Constructor of Ruler class to initialize
     // the map kingdomAndEmblem
     public Ruler(Map<String, String> kingdomsAndEmblems) {
         this.kingdomsAndEmblems = kingdomsAndEmblems;
@@ -66,12 +68,12 @@ public class Ruler {
             String emblem = kingdomsAndEmblems.get(kingdom);
 
             /**
-             * isAlliance is a function which we use to determine 
+             * isAlliance is a function which we use to determine
              * whether a given kingdom will agree to become an
              * ally of Space kingdom
              */
             if (isAlliance(encodedMessage, emblem) &&
-                uniqueKindoms.contains(kingdom) == false) {
+                    !uniqueKindoms.contains(kingdom)) {
 
                 // adding kingdom only if it is an ally of king shan. Hence we store only unique allies.
                 uniqueKindoms.add(kingdom); 
@@ -81,9 +83,9 @@ public class Ruler {
 
         /**
          *  we return the list of ruler and its allies only if
-         *  numnber of allies are greater than or equal to 3.
+         *  number of allies are greater than or equal to 3.
          */
-        if (uniqueKindoms.size() >= mininmuAlliesNeeded) {
+        if (uniqueKindoms.size() >= mininmumAlliesNeeded) {
             return rulerAndAllies;                
         } 
 
@@ -91,7 +93,7 @@ public class Ruler {
          * We return Map<String,List<String>> containing king as key and None as value when it is not 
          * possible for king shan to rule all the kingdoms. None represent no ally kingdoms.
          */
-        rulerAndAllies.put(king, Arrays.asList("None"));
+        rulerAndAllies.put(king, Collections.singletonList(noAllies));
         return rulerAndAllies;
     }
 
@@ -107,7 +109,7 @@ public class Ruler {
      */
     private boolean isAlliance(String encodedMessage, String emblem) {
 
-        MessageDecoder decoder = new MessageDecoder();
+        MessageDecoder decoder = new MessageDecoderImpl();
 
         /*  Using decode method of MessageDecoder via its object decoder.
          *  the method takes two arguments : String encodedMessage, int secretKey 
@@ -142,7 +144,7 @@ public class Ruler {
 
             // if decodedCharFreqMap does not contain ch or the frequency of ch is less than
             // the frequency of ch in emblemCharAndFreqMap  we return false
-            if (decodedCharAndFreqMap.containsKey(ch) == false ||
+            if (!decodedCharAndFreqMap.containsKey(ch) ||
                 emblemCharAndFreqMap.get(ch) > decodedCharAndFreqMap.get(ch)) {
                     return false;
                 }

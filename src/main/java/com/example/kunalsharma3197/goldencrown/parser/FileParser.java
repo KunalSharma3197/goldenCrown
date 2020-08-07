@@ -42,8 +42,6 @@ public class FileParser {
                 line = br.readLine();
             }
             everything = sb.toString();// converting StringBuilder object sb to String
-        } catch (Exception e) {
-            System.out.println(e);// printing exception if any.
         } finally {
             br.close();//closing the buffered reader
         }

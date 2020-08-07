@@ -12,16 +12,19 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 /**
-* This class checks the decoding finctionality of ruler class.
+* These tests checks the finctionality of ruler class under various scenarios.
  */
-
+@ExtendWith(Mockito)
 public class RulerTest{
 
     Map<String, String> kingdomsAndEmblems;
     String king;
     List<Pair<String, String>> kingdomsAndMessages;
+    // @Mock
+    // private MessageDecoderImpl decoder;
     /**
      * initialise the kingdom and emblem map before each test.
      */
@@ -34,10 +37,10 @@ public class RulerTest{
         kingdomsAndEmblems.put("ICE", "Mammoth");
         kingdomsAndEmblems.put("AIR", "Owl");
         kingdomsAndEmblems.put("FIRE", "Dragon");
-        king = "Space";
+        king = "SPACE";
 
         // initialising a new instance of kingdomsAndMessages before each test.
-        kingdomsAndMessages = new LinkedList<>(); 
+        kingdomsAndMessages = new LinkedList<>();
     }
 
 
@@ -49,7 +52,7 @@ public class RulerTest{
     @Test
     public void noMessagesSentByRulerKingdomTest() {
         Ruler ruler = new Ruler(kingdomsAndEmblems);
-        
+
         //passing an empty list as argument to getRuler
         Map<String, List<String>> rulerAndAllies = ruler.getRulerAndAllies(kingdomsAndMessages);
         //expected output is None
@@ -90,7 +93,7 @@ public class RulerTest{
         kingdomsAndMessages.add(new Pair<>("LAND", "FAIJWJSOOFAMAU"));
         kingdomsAndMessages.add(new Pair<>("ICE", "STHSTSTVSASOS"));
 
-        // all the above messeges after decode contains the character present in the
+        // all the above messages after decode contains the character present in the
         // emblem of their kingdoms. Hence all these kingdom will agree to become the ally of King shan
 
         Map<String, List<String>> rulerAndAllies = ruler
@@ -109,7 +112,7 @@ public class RulerTest{
      */
     
     @Test
-    public void getRulerAndAlliesAfterANewKingdomIsAdded() {
+    public void getRulerAndAlliesAfterANewKingdomIsAddedTest() {
 
         //we will consider Blaze as the new Kingdom and its emblem is Phoenix
         kingdomsAndEmblems.put("BLAZE", "Phoenix");
@@ -121,9 +124,10 @@ public class RulerTest{
         kingdomsAndMessages.add(new Pair<>("LAND", "FAIJWJSOOFAMAU"));
         kingdomsAndMessages.add(new Pair<>("ICE", "STHSTSTVSASOS"));
         kingdomsAndMessages.add(new Pair<>("BLAZE", "ABWSODVLKUPLE"));
+        kingdomsAndMessages.add(new Pair<>("FIRE", "QLMPODTY"));
 
-        // all the above messeges after decode contains the character present in the
-        // emblem of their kingdoms. Hence all these kingdom will agree to become the ally of King shan
+        // Four of  the above messages after decode contains the character present in the
+        // emblem of their kingdoms. Hence those kingdom will agree to become the ally of King shan
         // rulerAndAllies contains the ruler kingdom along with allies.
         Map<String, List<String>> rulerAndAllies = ruler
             .getRulerAndAllies(kingdomsAndMessages);

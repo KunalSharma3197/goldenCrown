@@ -7,20 +7,19 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class MessageDecoderTest {
+public class MessageDecoderImplTest {
     /**
      * these test are used for testing the functionality of decode method of MessageDecoder
      */
-  
+    MessageDecoderImpl decoder = new MessageDecoderImpl();// initialising new instance of MessageDecode before each test.
     @Test
     public void decodeMessageTest() {
 
-        String encodedMessage = "GOLDEN"; //encoded message 
-
-        MessageDecoder decoder = new MessageDecoder();// initialising new instance of MessageDecode before each test.
+        String encodedMessage = "GOLDEN"; //encoded message
+        int secretkey = 5; // key used for decoding.
 
         //decodedMessage contains each character from encodedMessage after decoding.
-        List<Character> decodedMessage = decoder.decode(encodedMessage, 5);
+        List<Character> decodedMessage = decoder.decode(encodedMessage, secretkey);
 
         //expected contains the correct decoding of each character present in encodedMessage.
         List<Character> expected = Arrays.asList('B', 'J', 'G', 'Y', 'Z', 'I');
@@ -37,12 +36,11 @@ public class MessageDecoderTest {
      * So any number or special characters wont be included in the decoded message.
      */
     @Test
-    public void testEncodedMessageWithAnyPossibleCharacter() {
+    public void testMessageWithSpecialCharacters() {
         String encodedMessage = "a1@ % BC";//encoded message
+        int secretkey = 2; // key used for decoding.
 
-        MessageDecoder decoder = new MessageDecoder();// initialising new instance of MessageDecode before each test.
-
-        List<Character> decodedMessage = decoder.decode(encodedMessage, 2);
+        List<Character> decodedMessage = decoder.decode(encodedMessage, secretkey);
         //expected message contains these characters after decoding.
         // Numbers and special characters are not decoded hence are not included in decoded message.
         List<Character> expected = Arrays.asList('Z', 'A'); 
@@ -54,14 +52,30 @@ public class MessageDecoderTest {
      * of all empty characters
      */
     @Test
-    public void encodedMessageIsEmpty() {
+    public void testEncodedMessageIsEmpty() {
         String encodedMessage = "        "; //empty message
-
-        MessageDecoder decoder = new MessageDecoder();// initialising new instance of MessageDecode before each test.
+        int secretkey = 10; // key used for decoding.
 
         //decodedMessage contains each character from encodedMessage after decoding.
-        List<Character> decodedMessage = decoder.decode(encodedMessage, 10);
+        List<Character> decodedMessage = decoder.decode(encodedMessage, secretkey);
         assertEquals(0, decodedMessage.size());
+    }
+    /**
+     * this test the functionality of decode method of MessageDecoder when encoded message consists
+     * of all spaces.
+     */
+    @Test
+    public void testMessageWithSpaces() {
+        String encodedMessage = "FG H A P F"; // message with spaces
+        int secretkey = 5; // key used for decoding.
+
+        //decodedMessage contains each character from encodedMessage after decoding.
+        List<Character> decodedMessage = decoder.decode(encodedMessage, secretkey);
+
+        //expected message contains these characters after decoding.
+        List<Character> expected = Arrays.asList('A', 'B', 'C', 'V', 'K', 'A');
+
+        assertEquals(expected, decodedMessage);
     }
 
 }

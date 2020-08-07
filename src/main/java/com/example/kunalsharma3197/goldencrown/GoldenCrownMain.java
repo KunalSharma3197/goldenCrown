@@ -18,7 +18,7 @@ import java.util.Map;
 public class GoldenCrownMain {
     
     // stores path to KingdomsAndEmblem.txt which contains kingdoms and their emblems. 
-    static final String pathToKingdomsAndEmblemsFile = "build/resources/main/KingdomsAndEmblems.txt";
+    static final String pathToKingdomsAndEmblemsFile = "src/main/resources/KingdomsAndEmblems.txt";
 
     /**
      * 
@@ -35,8 +35,8 @@ public class GoldenCrownMain {
         // Creating new instance of FileParser.
         FileParser fileParser = new FileParser();
 
-        //parsing and returning contents of the file as string using absolute path for specified file.
-        return fileParser.getContentsOfFile(file.getAbsolutePath());
+        //parsing and returning contents of the file as string using canonical path for specified file.
+        return fileParser.getContentsOfFile(file.getCanonicalPath());
     }
 
     public static void main(String[] args) throws IOException {
@@ -69,7 +69,7 @@ public class GoldenCrownMain {
 
         for (String king : rulerAndAllies.keySet()) {
 
-            if (rulerAndAllies.get(king).get(0) != "None") {
+            if (!rulerAndAllies.get(king).get(0).equals("None")) {
                 System.out.print(king + " "); // printing the ruling kingdom
             }            
             for (String ally : rulerAndAllies.get(king)) {

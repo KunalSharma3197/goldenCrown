@@ -31,7 +31,7 @@ public class Pair<F, S> {
             return true; // return true if both pair objects are same. 
         }
         
-        if (obj != null && obj instanceof Pair) { // if two pair objects are not same we compare their contents.
+        if (obj instanceof Pair) { // if two pair objects are not same we compare their contents.
             Pair<F,S> other = (Pair<F,S>) obj; 
 
             return (this.first.equals(other.first)) 
