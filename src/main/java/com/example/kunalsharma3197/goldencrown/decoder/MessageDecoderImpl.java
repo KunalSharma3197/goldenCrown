@@ -13,9 +13,9 @@ import java.util.List;
 
 public class MessageDecoderImpl implements MessageDecoder {
 
-    static final int numberOfAlphabets = 26; // number of english alphabets.
+    final int numberOfAlphabets = 26; // number of english alphabets.
 
-    static final char firstUpperCaseAlphabetCharacter = 'A'; // first alphabet character among all capital alphabets.
+    final char firstUpperCaseAlphabetCharacter = 'A'; // first alphabet character among all capital alphabets.
 
     public MessageDecoderImpl() {
 

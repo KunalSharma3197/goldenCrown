@@ -153,7 +153,7 @@ public class RulerImpl implements Ruler {
          */
         int secretKey = emblem.length();
         List<Character> decodedMessage = decoder.decode(encodedMessage,
-                secretKey);// Characters of encodedMessage is decoded and stored in decodedMessage.
+                secretKey);// Characters of encodedMessage are decoded and stored in decodedMessage.
 
         return decodedMessage; // returns the decodedMessage.
     }
@@ -181,7 +181,7 @@ public class RulerImpl implements Ruler {
             charAndFrequencyMap.put(character, charAndFrequencyMap.getOrDefault(character, 0) + 1);
         }
 
-        return charAndFrequencyMap;
+        return charAndFrequencyMap;// return the charAndFreqMap
     }
 
 }
