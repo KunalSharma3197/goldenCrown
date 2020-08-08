@@ -36,8 +36,8 @@ public class MessageDecoderImpl implements MessageDecoder {
 
         for (char character : encodedMessage.toCharArray()) {    
             
-            // decodedCharacter will hold the decoded character. It is initialised to an empty character.
-            char decodedCharacter = ' '; 
+            // decodedCharacter will hold the decoded character.
+            char decodedCharacter;
             
             // if character is not a letter or lowercase move to next iteration.
             if (!Character.isLetter(character) || Character.isLowerCase(character)) {
@@ -67,12 +67,12 @@ public class MessageDecoderImpl implements MessageDecoder {
 
         // originalCharacterPosition determines the character position in the alphabet.
         // for an uppercase charcter determine originalCharacterPosition using firstUpperCaseAlphabetCharacter.
-        int originaCharacterPosition = character - firstUpperCaseAlphabetCharacter;   
+        int originalCharacterPosition = character - firstUpperCaseAlphabetCharacter;
 
         //newAlphabetPosition determines the character's new positon in the alphabet.
         // using modulo we strictly remain in the alphabet range.
         int newAlphabetPosition = (
-            numberOfAlphabets + originaCharacterPosition - secretKey) % numberOfAlphabets;
+            numberOfAlphabets + originalCharacterPosition - secretKey) % numberOfAlphabets;
 
         return newAlphabetPosition; // return the new position
     }

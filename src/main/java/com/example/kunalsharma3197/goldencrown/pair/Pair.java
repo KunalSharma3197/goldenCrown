@@ -19,7 +19,7 @@ public class Pair<F, S> {
 
     /**
      * overriding equals method to compare two pair objects.
-     * @param Pair
+     * @param obj
      * @return boolean
      * equals method is used to compare two pair objects.
      * it returns true if both pair under comparison are same or their contents are same.

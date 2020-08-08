@@ -1,7 +1,11 @@
 package com.example.kunalsharma3197.goldencrown.solution;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
+import com.example.kunalsharma3197.goldencrown.decoder.MessageDecoderImpl;
 import com.example.kunalsharma3197.goldencrown.pair.Pair;
 
 import java.util.Arrays;
@@ -13,23 +17,35 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 /**
-* These tests checks the finctionality of ruler class under various scenarios.
+* These tests checks the functionality of ruler class under various scenarios.
  */
-@ExtendWith(Mockito)
-public class RulerTest{
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
+public class RulerImplTest {
 
-    Map<String, String> kingdomsAndEmblems;
-    String king;
-    List<Pair<String, String>> kingdomsAndMessages;
-    // @Mock
-    // private MessageDecoderImpl decoder;
+    private Map<String, String> kingdomsAndEmblems;
+    private String king;
+    private List<Pair<String, String>> kingdomsAndMessages;
+    @Mock
+    private MessageDecoderImpl decoder = new MessageDecoderImpl();
+
+    @InjectMocks
+    private RulerImpl ruler;
+
     /**
      * initialise the kingdom and emblem map before each test.
      */
     @BeforeEach
     void init() {
+        MockitoAnnotations.initMocks(this);
         kingdomsAndEmblems = new HashMap<>();
         kingdomsAndEmblems.put("SPACE", "Gorilla");
         kingdomsAndEmblems.put("LAND", "Panda");
@@ -39,8 +55,9 @@ public class RulerTest{
         kingdomsAndEmblems.put("FIRE", "Dragon");
         king = "SPACE";
 
-        // initialising a new instance of kingdomsAndMessages before each test.
         kingdomsAndMessages = new LinkedList<>();
+        ruler  = new RulerImpl(kingdomsAndEmblems);
+
     }
 
 
@@ -51,12 +68,13 @@ public class RulerTest{
     
     @Test
     public void noMessagesSentByRulerKingdomTest() {
-        Ruler ruler = new Ruler(kingdomsAndEmblems);
+        List<Character> decodedMessage = new LinkedList<>();
+        when(decoder.decode(anyString(), anyInt())).thenReturn(decodedMessage);
 
         //passing an empty list as argument to getRuler
         Map<String, List<String>> rulerAndAllies = ruler.getRulerAndAllies(kingdomsAndMessages);
         //expected output is None
-        assertEquals("None", rulerAndAllies.get(king).get(0));
+        assertEquals("NONE", rulerAndAllies.get(king).get(0));
     }
 
     /**
@@ -66,7 +84,9 @@ public class RulerTest{
     @Test 
     public void allMessagesSentToTheSameKingdomTest() {
 
-        Ruler ruler = new Ruler(kingdomsAndEmblems);
+        List<Character> decodedMessage = Arrays.asList('A', 'V', 'D', 'E', 'R', 'E', 'N',
+                'J', 'J', 'A', 'V', 'H', 'V', 'P');
+        when(decoder.decode("FAIJWJSOOFAMAU", 5)).thenReturn(decodedMessage);
 
         //passing same message multiple time to same kingdom
         kingdomsAndMessages.add(new Pair<>("LAND", "FAIJWJSOOFAMAU"));
@@ -75,8 +95,8 @@ public class RulerTest{
         kingdomsAndMessages.add(new Pair<>("LAND", "FAIJWJSOOFAMAU"));
 
         Map<String, List<String>> rulerAndAllies = ruler
-            .getRulerAndAllies(kingdomsAndMessages);//expected output is None
-        assertEquals(Arrays.asList("None"), rulerAndAllies.get(king));
+            .getRulerAndAllies(kingdomsAndMessages);//expected output is NONE
+        assertEquals(Arrays.asList("NONE"), rulerAndAllies.get(king));
     }
 
     /**
@@ -85,8 +105,18 @@ public class RulerTest{
      */
     @Test
     public void getRulerAndAlliesTest() {
+        List<Character> decodedMessage1 = Arrays.asList('O', 'L', 'W', 'L');
 
-        Ruler ruler = new Ruler(kingdomsAndEmblems);
+        List<Character> decodedMessage2 = Arrays.asList('A', 'V', 'D', 'E', 'R', 'E', 'N',
+                'J', 'J', 'A', 'V', 'H', 'V', 'P');
+
+        List<Character> decodedMessage3 = Arrays.asList('L', 'M', 'A', 'L', 'M', 'L', 'M',
+                'O', 'L', 'T', 'L', 'H', 'L');
+
+
+        when(decoder.decode("ROZO", 3)).thenReturn(decodedMessage1);
+        when(decoder.decode("FAIJWJSOOFAMAU", 5)).thenReturn(decodedMessage2);
+        when(decoder.decode("STHSTSTVSASOS", 7)).thenReturn(decodedMessage3);
 
         //adding kingdoms and messages sent into the list kingdomsAndMessages.
         kingdomsAndMessages.add(new Pair<>("AIR", "ROZO"));
@@ -114,10 +144,31 @@ public class RulerTest{
     @Test
     public void getRulerAndAlliesAfterANewKingdomIsAddedTest() {
 
+        List<Character> decodedMessage1 = Arrays.asList('O', 'L', 'W', 'L');
+
+        List<Character> decodedMessage2 = Arrays.asList('A', 'V', 'D', 'E', 'R', 'E', 'N',
+                'J', 'J', 'A', 'V', 'H', 'V', 'P');
+
+        List<Character> decodedMessage3 = Arrays.asList('L', 'M', 'A', 'L', 'M', 'L', 'M',
+                'O', 'L', 'T', 'L', 'H', 'L');
+
+        List<Character> decodedMessage4 = Arrays.asList('T', 'U', 'P', 'L', 'H', 'W', 'O',
+                'E', 'D', 'N', 'I', 'E', 'X');
+
+        List<Character> decodedMessage5 = Arrays.asList('K', 'F', 'G', 'J', 'I', 'X', 'N', 'S');
+
+        when(decoder.decode("ROZO", 3)).thenReturn(decodedMessage1);
+        when(decoder.decode("FAIJWJSOOFAMAU", 5)).thenReturn(decodedMessage2);
+        when(decoder.decode("STHSTSTVSASOS", 7)).thenReturn(decodedMessage3);
+        when(decoder.decode("ABWSODVLKUPLE", 7)).thenReturn(decodedMessage4);
+        when(decoder.decode("QLMPODTY", 6)).thenReturn(decodedMessage5);
+
+
+
         //we will consider Blaze as the new Kingdom and its emblem is Phoenix
         kingdomsAndEmblems.put("BLAZE", "Phoenix");
 
-        Ruler ruler = new Ruler(kingdomsAndEmblems);
+        RulerImpl ruler = new RulerImpl(kingdomsAndEmblems);
 
         //adding kingdoms and messages sent into the list kingdomsAndMessages.
         kingdomsAndMessages.add(new Pair<>("AIR", "ROZO"));
@@ -143,4 +194,5 @@ public class RulerTest{
 
         assertEquals(expected, rulerAndAllies);
     }
+
 }

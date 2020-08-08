@@ -43,7 +43,7 @@ public class StringMapper implements ObjectMapper {
 
     /**
      * 
-     * @param String data
+     * @param  data
      * @return String[]
      * splitDataByLineSeperator splits the given String data on the basis of empty line
      * and store each string after split in string array.
@@ -56,7 +56,7 @@ public class StringMapper implements ObjectMapper {
 
     /**
      * 
-     * @param String line
+     * @param  line
      * @return int index
      * getIndexOfFirstEmptyCharacter determines position of first empty character in a String line 
      */
@@ -94,7 +94,7 @@ public class StringMapper implements ObjectMapper {
             // string to left of that index will be the name of kingdom and string to the right is the message.
             kingdomsAndMessages.add(new Pair<>(line
                 .substring(0, index), line
-                .substring(index + 1, line.length())));
+                .substring(index + 1)));
         }
         
         return kingdomsAndMessages;
@@ -123,7 +123,7 @@ public class StringMapper implements ObjectMapper {
             
             // string to left of that index will be the name of kingdom and string to the right is the emblem.
             String kingdom = line.substring(0, index);
-            String emblem = line.substring(index + 1, line.length());
+            String emblem = line.substring(index + 1);
             kingdomsAndEmblems.put(kingdom, emblem);// adding key and value to the map.
         }
         return kingdomsAndEmblems;

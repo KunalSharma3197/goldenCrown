@@ -5,6 +5,7 @@ import com.example.kunalsharma3197.goldencrown.mapper.StringMapper;
 import com.example.kunalsharma3197.goldencrown.pair.Pair;
 import com.example.kunalsharma3197.goldencrown.parser.FileParser;
 import com.example.kunalsharma3197.goldencrown.solution.Ruler;
+import com.example.kunalsharma3197.goldencrown.solution.RulerImpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,7 +14,6 @@ import java.util.Map;
 /**
  * main class for running the program
  * path to input file is provided in args
- * @param String[] args
  */
 public class GoldenCrownMain {
     
@@ -57,7 +57,7 @@ public class GoldenCrownMain {
             .getKingdomsAndEmblems(kingdomsAndEmblemsData);
         
         // Creating new Instance of Ruler using map of kingdoms and emblems
-        Ruler ruler = new Ruler(kingdomsAndEmblems);
+        Ruler ruler = new RulerImpl(kingdomsAndEmblems);
 
        // kingdomsAndMessages contains the content of kingdomsAndMessagesData mapped using objectMapper
         List<Pair<String, String>> kingdomsAndMessages = objectMapper
@@ -69,7 +69,7 @@ public class GoldenCrownMain {
 
         for (String king : rulerAndAllies.keySet()) {
 
-            if (!rulerAndAllies.get(king).get(0).equals("None")) {
+            if (!rulerAndAllies.get(king).get(0).equals("NONE")) {
                 System.out.print(king + " "); // printing the ruling kingdom
             }            
             for (String ally : rulerAndAllies.get(king)) {

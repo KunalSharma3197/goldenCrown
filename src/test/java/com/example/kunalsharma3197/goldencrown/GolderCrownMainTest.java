@@ -35,28 +35,28 @@ public class GolderCrownMainTest {
     @Test
     public void testForAlliedKingdoms() throws IOException {
 
-        String path1 = "src/test/resources/input1.txt";
-        GoldenCrownMain.main(new String[]{path1});
+        String pathToFile = "src/test/resources/input1.txt";
+        GoldenCrownMain.main(new String[]{pathToFile});
 
         assertEquals("SPACE AIR LAND ICE ", outStream.toString());
     }
     @Test
     public void testForNoAlliedKingdoms() throws  IOException {
-        String path2 = "src/test/resources/input2.txt";
-        GoldenCrownMain.main(new String[]{path2});
-        assertEquals("None ", outStream.toString());
+        String pathToFile = "src/test/resources/input2.txt";
+        GoldenCrownMain.main(new String[]{pathToFile});
+        assertEquals("NONE ", outStream.toString());
     }
     @Test
     public void testForDuplicates() throws IOException {
-        String path3 = "src/test/resources/input5.txt";
-        GoldenCrownMain.main(new String[]{path3});
-        assertEquals("None ", outStream.toString());
+        String pathToFile = "src/test/resources/input5.txt";
+        GoldenCrownMain.main(new String[]{pathToFile});
+        assertEquals("NONE ", outStream.toString());
     }
 
     @Test
     public void testForFileNotFound() {
-        String path4 = "src/test/resources/noSuchFile.txt";
+        String pathToFile = "src/test/resources/noSuchFile.txt";
         assertThrows(Exception.class,
-                () -> GoldenCrownMain.main(new String[]{path4}));
+                () -> GoldenCrownMain.main(new String[]{pathToFile}));
     }
 }
