@@ -29,4 +29,4 @@ Name : goldencrown
    It is parsed using file parser.
 5. Pair is  a container to ease passing around a tuple of two objects defined in pair folder.
 6. StringMapper is responsible for mapping the data parsed as String to a Data Structure which inturns allows us to process it.
-7. Solution class contains the necessary logic to process the data and generate the result.
+7. Solution contains the necessary logic to process the data and generate the result.
